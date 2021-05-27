@@ -19,7 +19,18 @@ He afegit un appsettings.json en l'arrel per si es vol cridar els projectes des 
 
 ```bash
 dotnet run --project .\CuaProva1\
-``` 
+... Enviar missatge 0
+... Enviar missatge 1
+... Enviar missatge 2
+... Enviar missatge 3
+... Enviar missatge 4
+... Enviar missatge 5
+... Enviar missatge 6
+... Enviar missatge 7
+... Enviar missatge 8
+... Enviar missatge 9
+... Enviar 10 missatges de cop amb un batch
+```
 
 En canvi si es vol executar tot des de VisualStudio cada projecte té la seva pròpia configuració. De totes formes és millor deixar-los i posar es dades secretes en el User-Secrets 
 

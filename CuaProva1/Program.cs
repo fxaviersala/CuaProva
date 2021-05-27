@@ -39,7 +39,14 @@ namespace CuaProva1
         {
             await using var client = new ServiceBusClient(connection);
             ServiceBusSender sender = client.CreateSender(queueName);
-            await sender.SendMessageAsJsonAsync(Shared.usuaris[0].Item1, Shared.usuaris[0].Item2);
+
+            int index = 0;
+            foreach (var usuari in Shared.usuaris)
+            {
+                Console.WriteLine($"... Enviar missatge {index}");
+                await sender.SendMessageAsJsonAsync(Shared.usuaris[index].Item1, Shared.usuaris[index].Item2);
+                index++;
+            }
         }
 
         static Queue<ServiceBusMessage> CreateMessages()
@@ -83,6 +90,7 @@ namespace CuaProva1
                 {
                     messages.Dequeue();
                 }
+                Console.WriteLine($"... Enviar {messageBatch.Count} missatges de cop amb un batch");
                 await sender.SendMessagesAsync(messageBatch);
             }
         }

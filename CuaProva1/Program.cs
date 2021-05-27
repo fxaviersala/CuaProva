@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
@@ -8,6 +8,8 @@ using CuaShared;
 
 namespace CuaProva1
 {
+    
+
     public static class MessageSenderExtension
     {
         /// <summary>
@@ -34,6 +36,7 @@ namespace CuaProva1
 
     class Program
     {
+        public const int Bucle = 10;
 
         static async Task SendMessageAsync(string connection, string queueName)
         {
@@ -103,11 +106,14 @@ namespace CuaProva1
         {
             var (connection, queueName) = Shared.GetUserSecrets();
 
-            // Un sol missatge
-            await SendMessageAsync(connection, queueName);
+            for (int i = 0; i < Bucle; i++)
+            {
+                // missatges un a un
+                await SendMessageAsync(connection, queueName);
 
-            // Un grup de missatges
-            await SendMessageBatchAsync(connection, queueName);
+                // Un grup de missatges
+                await SendMessageBatchAsync(connection, queueName);
+            }
         }
     }
 }

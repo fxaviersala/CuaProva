@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.IO;
 
@@ -41,9 +41,8 @@ namespace CuaShared
 
         public static (string connection, string queueName) GetUserSecrets()
         {
-            var devEnvironmentVariable = Environment.GetEnvironmentVariable("NETCORE_ENVIRONMENT");
-            var isDevelopment = string.IsNullOrEmpty(devEnvironmentVariable) || devEnvironmentVariable.ToLower() == "development";
-            //Determines the working environment as IHostingEnvironment is unavailable in a console app
+            // var devEnvironmentVariable = Environment.GetEnvironmentVariable("NETCORE_ENVIRONMENT");
+            // var isDevelopment = string.IsNullOrEmpty(devEnvironmentVariable) || devEnvironmentVariable.ToLower() == "development";            
 
             var configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
@@ -51,8 +50,6 @@ namespace CuaShared
                 .AddUserSecrets<SecretStuff>()
                 .Build();
             
-
-
             var secret = configuration.GetSection("SecretStuff");
                         
             return (secret["ConnectionString"], secret["QueueName"]);

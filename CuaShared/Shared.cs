@@ -15,7 +15,7 @@ namespace CuaShared
             random = new Random();
         }
 
-        public const string ConnectionString = "Endpoint=sb://proves.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=bSINdC+fyIZd/xT+FBYoZLBb56OChR1Psb00PPjTM0g=";
+        public const string ConnectionString = "Endpoint=sb://....";
         public const string QueueName = "entra";
         
         private static string[] Accions = new[] { "create", "update", "remove" };

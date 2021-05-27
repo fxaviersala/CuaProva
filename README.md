@@ -1,4 +1,4 @@
-# CuaProva
+# Proves amb Azure ServiceBus
 
 Proves amb dues de les tres llibreries d'Azure per gestionar AzureBus: 
 

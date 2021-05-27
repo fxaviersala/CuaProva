@@ -8,3 +8,4 @@ Proves amb dues de les tres llibreries d'Azure per gestionar AzureBus:
 Teòricament qualsevol informació es pot enviar amb una llibreria i recuperar-se amb l'altra sense problemes a pesar dels canvis en els 
 noms de les propietats: **Label**/**Subject**, **ApplicationProperties**/**UserProperties**
 
+Els exemples de recepció són lleugerament diferents (CuaProva1 recupera de la cua Dead-letter i CuaProva2 fa un Peek dels missatges abans de recuperar-los)

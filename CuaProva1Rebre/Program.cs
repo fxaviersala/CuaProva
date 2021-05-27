@@ -1,4 +1,6 @@
-﻿using System;
+using System;
+using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus;
 using CuaShared;
@@ -11,8 +13,11 @@ namespace CuaProva1Rebre
         static async Task MessageHandler(ProcessMessageEventArgs args)
         {
             var message = args.Message;
-            var body = args.Message.Body.ToString();
-            Console.WriteLine($"{message.ApplicationProperties["accio"]} de la taula {message.Subject} --> {body}");            
+            var body = args.Message.Body;
+
+            Usuari usuari = JsonSerializer.Deserialize<Usuari>(Encoding.UTF8.GetString(body));            
+
+            Console.WriteLine($"{message.ApplicationProperties["accio"]} de la taula {message.Subject} --> {usuari.Nom} {usuari.Cognom}");            
 
             await args.CompleteMessageAsync(args.Message);
         }
@@ -29,7 +34,7 @@ namespace CuaProva1Rebre
             var options = new ServiceBusProcessorOptions
             {
                 // AutoCompleteMessages = false,
-                // MaxConcurrentCalls = 20
+                // MaxConcurrentCalls = 20                
             };
             ServiceBusProcessor processor = client.CreateProcessor(cua, options);
 

@@ -7,11 +7,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CuaProva1Envia", "CuaProva1
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CuaProva1Rebre", "CuaProva1Rebre\CuaProva1Rebre.csproj", "{2F0DC91E-9AAC-4502-8FE8-926A35A4640C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CuaProva2Envia", "CuaProva2\CuaProva2Envia.csproj", "{D6D569C0-EAA6-4D68-B75F-447A3ED306DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CuaProva2Envia", "CuaProva2\CuaProva2Envia.csproj", "{D6D569C0-EAA6-4D68-B75F-447A3ED306DE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CuaProva2Rebre", "CuaProva2Rebre\CuaProva2Rebre.csproj", "{D6FCD5DE-EFC2-411A-88DE-1A041CEDAE7B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CuaProva2Rebre", "CuaProva2Rebre\CuaProva2Rebre.csproj", "{D6FCD5DE-EFC2-411A-88DE-1A041CEDAE7B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CuaShared", "CuaShared\CuaShared.csproj", "{95AE5E33-CE61-44DF-B1A1-15A178A937CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CuaShared", "CuaShared\CuaShared.csproj", "{95AE5E33-CE61-44DF-B1A1-15A178A937CC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2E64FEA6-9307-41DE-8565-9DE7C8CC84F1}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

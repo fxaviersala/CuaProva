@@ -17,10 +17,7 @@ namespace CuaShared
         {
             random = new Random();
         }
-
-        public const string ConnectionString = "Endpoint=sb://cuaproves.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=u0k+SNS2Oi89NCAlioH9NU9zKaVUZ8yGzNZvtIv0s/8=";
-        public const string QueueName = "fantastiqueue";
-        
+                
         private static string[] Accions = new[] { "create", "update", "remove" };
         public static string GetRandomAction()
         {

@@ -8,11 +8,41 @@ using CuaShared;
 
 namespace CuaProva2
 {
+    public static class MessageSenderExtension
+    {
+        /// <summary>
+        /// Converteix l'objecte a Json i l'envia a la cua
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="cua"></param>
+        /// <param name="label">Etiqueta</param>
+        /// <param name="id">Identificador</param>
+        /// <param name="objectToAdd">Objecte a convertir</param>
+        /// <param name="caducitat">Opcional. Quan caduca</param>
+        /// <returns></returns>
+        public static async Task SendMessageAsJsonAsync<T>(this MessageSender cua, string label, string id, T objectToAdd, TimeSpan? caducitat = null)
+        {
+
+            var message = new Message(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(objectToAdd)))
+            {
+                ContentType = "application/json",
+                Label = label,
+                MessageId = id,
+                TimeToLive = caducitat ?? new TimeSpan(0, 0, 0, 0, -1),
+            };
+
+            message.UserProperties.Add("accio", Shared.GetRandomAction());
+
+            await cua.SendAsync(message);
+        }
+    }
+
+
     public class Program
     {
-        public async Task Run()
+        public async Task Run(string connection, string queuename)
         {
-            await SendJsonMessagesAsync(Shared.ConnectionString, Shared.QueueName);
+            await SendJsonMessagesAsync(connection, queuename);
         }
 
         async Task SendJsonMessagesAsync(string connectionString, string queueName)
@@ -42,10 +72,12 @@ namespace CuaProva2
 
         public static async Task<int> Main(string[] args)
         {
+            var (connection, queueName) = Shared.GetUserSecrets();
+
             try
             {
                 var app = new Program();
-                await app.Run();
+                await app.Run(connection, queueName);
             }
             catch (Exception e)
             {
@@ -56,36 +88,6 @@ namespace CuaProva2
         }
     }
 
-
-
-    public static class MessageSenderExtension
-    {
-        /// <summary>
-        /// Converteix l'objecte a Json i l'envia a la cua
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="cua"></param>
-        /// <param name="label">Etiqueta</param>
-        /// <param name="id">Identificador</param>
-        /// <param name="objectToAdd">Objecte a convertir</param>
-        /// <param name="caducitat">Opcional. Quan caduca</param>
-        /// <returns></returns>
-        public static async Task SendMessageAsJsonAsync<T>(this MessageSender cua, string label, string id, T objectToAdd, TimeSpan? caducitat = null)
-        {
-
-            var message = new Message(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(objectToAdd)))
-            {
-                ContentType = "application/json",
-                Label = label,
-                MessageId = id,
-                TimeToLive = caducitat ?? new TimeSpan(0, 0, 0, 0, -1),                
-            };
-
-            message.UserProperties.Add("accio", Shared.GetRandomAction());
-
-            await cua.SendAsync(message);
-        }
-    }
 }
 
 

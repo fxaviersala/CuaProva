@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using System;
+using System.IO;
 
 namespace CuaShared
 {
@@ -7,6 +9,7 @@ namespace CuaShared
         public string Nom { get; set; }
         public string Cognom { get; set; }
     }
+
     public static class Shared
     {
         static Random random;
@@ -15,8 +18,8 @@ namespace CuaShared
             random = new Random();
         }
 
-        public const string ConnectionString = "Endpoint=sb://....";
-        public const string QueueName = "entra";
+        public const string ConnectionString = "Endpoint=sb://cuaproves.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=u0k+SNS2Oi89NCAlioH9NU9zKaVUZ8yGzNZvtIv0s/8=";
+        public const string QueueName = "fantastiqueue";
         
         private static string[] Accions = new[] { "create", "update", "remove" };
         public static string GetRandomAction()
@@ -38,6 +41,25 @@ namespace CuaShared
             ("usuari", new Usuari {Nom = "Ramona", Cognom = "Reig"}),
             ("usuari", new Usuari {Nom = "Maria de la Asunción", Cognom = "Serra"})
         };
+
+        public static (string connection, string queueName) GetUserSecrets()
+        {
+            var devEnvironmentVariable = Environment.GetEnvironmentVariable("NETCORE_ENVIRONMENT");
+            var isDevelopment = string.IsNullOrEmpty(devEnvironmentVariable) || devEnvironmentVariable.ToLower() == "development";
+            //Determines the working environment as IHostingEnvironment is unavailable in a console app
+
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddUserSecrets<SecretStuff>()
+                .Build();
+            
+
+
+            var secret = configuration.GetSection("SecretStuff");
+                        
+            return (secret["ConnectionString"], secret["QueueName"]);
+        }
 
         
     }

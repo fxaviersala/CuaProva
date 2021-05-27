@@ -46,11 +46,11 @@ namespace CuaProva1Rebre
             Console.WriteLine("processor killed");
         }
 
-        private static async Task ReceiveDeadLetterMessages()
+        private static async Task ReceiveDeadLetterMessages(string queueName)
         {
             ServiceBusReceivedMessage receivedMessage;
 
-            var deadLetterPath = EntityNameHelper.FormatDeadLetterPath(Shared.QueueName);
+            var deadLetterPath = EntityNameHelper.FormatDeadLetterPath(queueName);
             var receiver = client.CreateReceiver(deadLetterPath);
             do
             {
@@ -69,9 +69,11 @@ namespace CuaProva1Rebre
         private static ServiceBusClient client;
         public static async Task Main()
         {
-            client = new ServiceBusClient(Shared.ConnectionString);
+            var (connection, queueName) = Shared.GetUserSecrets();
 
-            await ReceiveMessagesAsync(Shared.QueueName);
+            client = new ServiceBusClient(connection);
+
+            await ReceiveMessagesAsync(queueName);
 
 
             // Obtenir la cua Dead-Letter
@@ -82,7 +84,7 @@ namespace CuaProva1Rebre
                     Console.ResetColor();
             }
 
-            await ReceiveDeadLetterMessages();
+            await ReceiveDeadLetterMessages(queueName);
             await client.DisposeAsync();
         }
 

@@ -35,10 +35,10 @@ namespace CuaProva1
     class Program
     {
 
-        static async Task SendMessageAsync()
+        static async Task SendMessageAsync(string connection, string queueName)
         {
-            await using var client = new ServiceBusClient(Shared.ConnectionString);
-            ServiceBusSender sender = client.CreateSender(Shared.QueueName);
+            await using var client = new ServiceBusClient(connection);
+            ServiceBusSender sender = client.CreateSender(queueName);
             await sender.SendMessageAsJsonAsync(Shared.usuaris[0].Item1, Shared.usuaris[0].Item2);
         }
 
@@ -59,10 +59,10 @@ namespace CuaProva1
             return messages;
         }
 
-        static async Task SendMessageBatchAsync()
+        static async Task SendMessageBatchAsync(string connection, string queueName)
         {
-            await using ServiceBusClient client = new ServiceBusClient(Shared.ConnectionString);
-            ServiceBusSender sender = client.CreateSender(Shared.QueueName);
+            await using ServiceBusClient client = new ServiceBusClient(connection);
+            ServiceBusSender sender = client.CreateSender(queueName);
             Queue<ServiceBusMessage> messages = CreateMessages();
             int messageCount = messages.Count;
 
@@ -93,11 +93,13 @@ namespace CuaProva1
         /// <returns></returns>
         static async Task Main()
         {
+            var (connection, queueName) = Shared.GetUserSecrets();
+
             // Un sol missatge
-            await SendMessageAsync();
+            await SendMessageAsync(connection, queueName);
 
             // Un grup de missatges
-            await SendMessageBatchAsync();
+            await SendMessageBatchAsync(connection, queueName);
         }
     }
 }

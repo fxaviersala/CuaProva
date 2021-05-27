@@ -13,14 +13,14 @@ namespace CuaProva2Rebre
         
         QueueClient receiveClient;
 
-        public async Task Run()
+        public async Task Run(string connection, string queuename)
         {
 
             // Preview
-            await this.PeekMessagesAsync(Shared.ConnectionString, Shared.QueueName);
+            await this.PeekMessagesAsync(connection, queuename);
             // Get
 
-            this.receiveClient = new QueueClient(Shared.ConnectionString, Shared.QueueName, ReceiveMode.PeekLock);
+            this.receiveClient = new QueueClient(connection, queuename, ReceiveMode.PeekLock);
             this.InitializeReceiver();
 
             await Task.WhenAny(
@@ -107,10 +107,12 @@ namespace CuaProva2Rebre
 
         public static async Task<int> Main(string[] args)
         {
+            var (connection, queueName) = Shared.GetUserSecrets();
+
             try
             {
                 var app = new Program();
-                await app.Run();
+                await app.Run(connection, queueName);
             }
             catch (Exception e)
             {

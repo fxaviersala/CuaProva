@@ -53,8 +53,7 @@ namespace CuaProva2Rebre
 
                         lock (Console.Out)
                         {
-                            Console.WriteLine($"{message.MessageId} - {message.ContentType} - {message.Body}");
-                            Console.WriteLine($"  {message.UserProperties["accio"]} de la taula {message.Label} : {usuari.Nom} {usuari.Cognom}");                            
+                            Console.WriteLine($"{message.MessageId}/{message.SystemProperties.SequenceNumber} -  {message.UserProperties["accio"]} de la taula {message.Label} : {usuari.Nom} {usuari.Cognom}");                            
                         }
                     }
                     await receiveClient.CompleteAsync(message.SystemProperties.LockToken);

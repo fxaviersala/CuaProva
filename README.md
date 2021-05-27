@@ -1,5 +1,34 @@
 # Proves amb Azure ServiceBus
 
+## Configuració
+
+Cal crear un namespace i una cua a Azure. 
+
+El programa necessita el `ConnectionString` i el nom de la cua que defineixo en el fitxer `appsettings.json`.
+
+```json
+{
+    "SecretStuff": {
+        "ConnectionString": "Endpoint=sb://xxxx.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=xxxxxxx",
+        "QueueName": "yyyyyyyyyyyyy"
+      }
+}
+```
+
+He afegit un appsettings.json en l'arrel per si es vol cridar els projectes des de la línia de comandes. Això fa que es puguin executar els projectes només afegint les dades secretes en el fitxer de configuració de l'arrel:
+
+```bash
+dotnet run --project .\CuaProva1\
+``` 
+
+En canvi si es vol executar tot des de VisualStudio cada projecte té la seva pròpia configuració. De totes formes és millor deixar-los i posar es dades secretes en el User-Secrets 
+
+![imatge](https://user-images.githubusercontent.com/44464869/119808564-86e66880-bee4-11eb-9364-26a8167b51f2.png)
+
+Tots els projectes comparteixen la clau i per tant no caldrà tocar res més
+
+## Prova
+
 Proves amb dues de les tres llibreries d'Azure per gestionar AzureBus: 
 
 * **CuaProva1**: Fa referència a la llibreria `Azure.Messaging.ServiceBus`. Sembla que és la més nova
@@ -40,12 +69,4 @@ fe117ed30fff4a758eefbd0f58b83b77/51 -  remove de la taula usuari : Ramona Reig
 45613a5b34d44414a872c48e47ecf8f5/52 -  remove de la taula usuari : Maria de la Asunción Serra
 ```
 
-## Configuració
 
-He afegit un appsettings.json en l'arrel per si es vol cridar els projectes des de la línia de comandes. Això permet només fer servir el `appsettings.json` de l'arrel:
-
-```bash
-dotnet run --project .\CuaProva1\
-``` 
-
-En canvi des de VisualStudio cada projecte té el seu. En Visual Studio és millor deixar-los i afegir la configuració en el User-Secrets (tots els projectes comparteixen la clau i per tant tindran la mateixa configuració)
